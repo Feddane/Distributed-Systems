@@ -4,7 +4,7 @@
  * as a guideline for developing your own functions.
  */
 
-#include "fac.h"
+#include "fac.h"clear
 
 void
 fact_prog_1(char *host, int num)
