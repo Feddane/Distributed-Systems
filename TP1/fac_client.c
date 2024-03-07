@@ -6,28 +6,30 @@
 
 #include "fac.h"
 
-
 void
-fact_prog_1(char *host)
+fact_prog_1(char *host, int num)
 {
-	CLIENT *clnt;
-	int  *result_1;
-	S  factoriel_1_arg;
+    CLIENT *clnt;
+    int  *result_1;
+    S  factoriel_1_arg;
+
+    factoriel_1_arg.a = num; // Assigner le nombre à la structure
 
 #ifndef	DEBUG
-	clnt = clnt_create (host, FACT_PROG, FACT_VERS, "udp");
-	if (clnt == NULL) {
-		clnt_pcreateerror (host);
-		exit (1);
-	}
+    clnt = clnt_create (host, FACT_PROG, FACT_VERS, "udp");
+    if (clnt == NULL) {
+        clnt_pcreateerror (host);
+        exit (1);
+    }
 #endif	/* DEBUG */
 
-	result_1 = factoriel_1(&factoriel_1_arg, clnt);
-	if (result_1 == (int *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
+    result_1 = factoriel_1(&factoriel_1_arg, clnt);
+    if (result_1 == (int *) NULL) {
+        clnt_perror (clnt, "call failed");
+    }
+
 #ifndef	DEBUG
-	clnt_destroy (clnt);
+    clnt_destroy (clnt);
 #endif	 /* DEBUG */
 }
 
@@ -35,13 +37,17 @@ fact_prog_1(char *host)
 int
 main (int argc, char *argv[])
 {
-	char *host;
+    char *host;
+    int num;
 
-	if (argc < 2) {
-		printf ("usage: %s server_host\n", argv[0]);
-		exit (1);
-	}
-	host = argv[1];
-	fact_prog_1 (host);
-exit (0);
+    if (argc < 3) {
+        printf ("usage: %s server_host number\n", argv[0]);
+        exit (1);
+    }
+    host = argv[1];
+    num = atoi(argv[2]); // Convertir l'argument du nombre en entier
+    fact_prog_1 (host, num);
+    exit (0);
 }
+
+

@@ -5,15 +5,21 @@
  */
 
 #include "fac.h"
+#include <stdio.h>
 
 int *
 factoriel_1_svc(S *argp, struct svc_req *rqstp)
 {
-	static int  result;
+    static int result = 1;
+    int i;
 
-	/*
-	 * insert server code here
-	 */
+    /*
+     * Calculating factorial
+     */
+    for (i = 1; i <= argp->a; i++) {
+        result *= i;
+    }
 
-	return &result;
+    return &result;
 }
+
